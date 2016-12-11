@@ -1,9 +1,7 @@
-# Example for "A Framework for Estimating and TestingQualitative Interactions"
-
-One Paragraph of project description goes here
+# Data Example fromr "A Framework for Estimating and Testing Qualitative Interactions"
 
 ### Prerequisities
-Our method is implemented in Python. The first step to using out method should be installing [CVXPY](http://www.cvxpy.org/en/latest/install/), whose dependencies are listed [here](http://www.cvxpy.org/en/latest/install/#install-from-source). In addition to CVXPY's dependencies, our method requires the following Python modules:
+We implement our method in Python. The first step of using the method should be installing [CVXPY](http://www.cvxpy.org/en/latest/install/), whose dependencies are listed [here](http://www.cvxpy.org/en/latest/install/#install-from-source). In addition to CVXPY's dependencies, our method requires the following Python modules:
 
 * ctypes
 * os 
@@ -16,7 +14,7 @@ Our method is implemented in Python. The first step to using out method should b
 * qualitativeinteractions (our module; included in the repository)
 
 ## Example
-Need to add
+The python scipt "do_data_example.py" runs our method and produces Figure 3 and Figure 5 of the paper. The R script "do_logistic_regression.R" runs logistic regression and produces Figure 4. 
 
 ## License
 Need to add
