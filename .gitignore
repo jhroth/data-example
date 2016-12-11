@@ -1,0 +1,55 @@
+# folders #
+AWS_Results/
+
+
+# LateX stuff  (including .tex files since I'm using knitr for everything)#
+######################
+*.tex
+*.log
+*.out
+*.aux
+*.bbl
+*.blg
+*.snm
+*.toc
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+
+# backups #
+############
+*~
+*#*
+
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# RData files #
+##############
+*.Rdata
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
