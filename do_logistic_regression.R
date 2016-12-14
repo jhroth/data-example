@@ -23,7 +23,7 @@ predicted.treatment <- expit(coef(logistic.ACTR3B)["(Intercept)"] + coef(logisti
 png("Plots/logistic_regression_ACTR3B.png", width=480, height=480)
 par(mar=c(5.1, 5.1, 4.1, 2.1))
 plot(ACTR3B[treatment==0], pcr[treatment==0], col="DarkOrange", type="p", pch=16,
-      xlab="ACTR3B", ylab="Probability of 3-year pCR", ylim=c(0, 1), cex=1.2, cex.lab=2, cex.axis=1.8)
+      xlab="ACTR3B", ylab="Probability of 3-year pCR", ylim=c(0, 1), xlim=c(min(ACTR3B), max(ACTR3B)), cex=1.2, cex.lab=2, cex.axis=1.8)
 points(ACTR3B[treatment==1], pcr[treatment==1], col="blue", type="p", cex=1.2, pch=16)
 lines(ACTR3B.control, predicted.control, type="l", col="DarkOrange", lwd=6)
 lines(ACTR3B.treatment, predicted.treatment, type="l", col="blue", lwd=6)
