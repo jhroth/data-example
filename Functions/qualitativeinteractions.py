@@ -637,12 +637,12 @@ def plot_fitted_values(hypothesis, X, Y,
     ord_treat = np.argsort(X_treat, axis=0)[:, 0]
     plt.clf()
     if include_truth == True:
-        plt.scatter(X_truth[ind_control_truth], Y_truth[ind_control_truth], color="blue", s=3)
-        plt.scatter(X_truth[ind_treat_truth], Y_truth[ind_treat_truth], color="DarkOrange", s=3)
-    plt.scatter(X[ind_control, 0], Y[ind_control, 0], color="blue", s=3)
-    plt.scatter(X[ind_treat, 0], Y[ind_treat, 0], color="DarkOrange", s=3)
-    plt.plot(X_control[ord_control], fitted_control[ord_control], label="treatment = 0", color="blue", linewidth=4)
-    plt.plot(X_treat[ord_treat], fitted_treat[ord_treat], label="treatment = 1", color="DarkOrange", linewidth=4)
+        plt.scatter(X_truth[ind_control_truth], Y_truth[ind_control_truth], color="DarkOrange", s=3)
+        plt.scatter(X_truth[ind_treat_truth], Y_truth[ind_treat_truth], color="blue", s=3)
+    plt.scatter(X[ind_control, 0], Y[ind_control, 0], color="DarkOrange", s=3)
+    plt.scatter(X[ind_treat, 0], Y[ind_treat, 0], color="blue", s=3)
+    plt.plot(X_control[ord_control], fitted_control[ord_control], label="treatment = 0", color="DarkOrange", linewidth=4)
+    plt.plot(X_treat[ord_treat], fitted_treat[ord_treat], label="treatment = 1", color="blue", linewidth=4)
     plt.title(plot_title)
     if response_name is not None:
         plt.ylabel(response_name, fontsize=labels_fontsize)
@@ -703,12 +703,12 @@ def plot_fitted_surface(response_type, hypothesis, X,
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     if groups_to_show == "both":
-        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_control_fitted, color="blue", alpha=alpha_control)
-        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_treat_fitted, color="orange", alpha=alpha_treat)
+        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_control_fitted, color="orange", alpha=alpha_control)
+        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_treat_fitted, color="blue", alpha=alpha_treat)
     elif groups_to_show == "control_only":
-        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_control_fitted, color="blue", alpha=alpha_control)
+        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_control_fitted, color="orange", alpha=alpha_control)
     elif groups_to_show == "treat_only":
-        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_treat_fitted, color="orange", alpha=alpha_treat)
+        ax.plot_surface(X=x_grid, Y=y_grid, Z=Z_treat_fitted, color="blue", alpha=alpha_treat)
     else:
         raise NameError("need to show either both groups, control only, or treat only")
     if feature_names is None:
