@@ -1,5 +1,6 @@
 # folders #
 AWS_Results/
+old/
 
 
 # LateX stuff  (including .tex files since I'm using knitr for everything)#
