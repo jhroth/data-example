@@ -1,4 +1,4 @@
-# Data Example fromr "A Framework for Estimating and Testing Qualitative Interactions"
+# Data Example from "A Framework for Estimating and Testing Qualitative Interactions"
 
 ### Prerequisities
 We implement our method in Python. The first step of using the method should be installing [CVXPY](http://www.cvxpy.org/en/latest/install/), whose dependencies are listed [here](http://www.cvxpy.org/en/latest/install/#install-from-source). In addition to CVXPY's dependencies, our method requires the following Python modules:

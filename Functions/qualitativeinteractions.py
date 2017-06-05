@@ -94,7 +94,7 @@ def fitted_values_cv(response_type, Y, n, p, ind_training, ind_test,  ggd_thresh
                             ggd_theta_init=None, ggd_L=0.25):
     if p == 1:
         X_continuous = np.reshape(X_continuous, (n, ))
-        fitted_training = fitted_values(hypothesis="alternative", response_type=response_type, X_continuous=X_continuous[ind_training], Y=Y[ind_training], lam_alt=lam_continuous, verbose=verbose,
+        fitted_training = fitted_values(hypothesis="alternative", response_type=response_type, X_continuous=X_continuous[ind_training], Y=Y[ind_training], lam_alt_continuous=lam_continuous, verbose=verbose,
         use_frobenius=use_frobenius, scalar_frobenius=scalar_frobenius,
         ggd_theta_init=ggd_theta_init, ggd_L=ggd_L, ggd_thresh=ggd_thresh, thresh=thresh)
         fitted_test = np.interp(X_continuous[ind_test], X_continuous[ind_training][fitted_training["ind_ordered_X"]], fitted_training["theta_result"][fitted_training['ind_ordered_X']])
@@ -671,6 +671,11 @@ def simulation_scenario(response_type, form, truth, seed, SNR, p, n=200, delta=0
     elif X_dist == "evenly_spaced":
         for col in range(p):
             X[:, col] = np.linspace(start=X_start, stop=X_stop, num=n)
+    elif X_dist == "AE_example":
+        epsilon = (X_stop - X_start) / 100
+        for col in range(p):
+            X[range(int(np.floor(n/2))), col] = np.array(np.random.uniform(X_start - epsilon, X_start + epsilon,  int(np.floor(n/2))))
+            X[range(int(np.floor(n/2)), n), col] = np.array(np.random.uniform(X_stop - epsilon, X_stop + epsilon,  int(np.ceil(n/2))))
     treatment = np.random.binomial(n=1, p=np.repeat(0.5, n))
     ind_treat = np.flatnonzero(treatment==1)
     ind_control = np.flatnonzero(treatment==0)
@@ -810,21 +815,12 @@ def cv_oracle_error(response_type, fitted_values_matrix, truth, grid_intercept_v
         grid_oracle_error = [np.sum( ( (fitted_values_matrix[j] - grid_intercept_vec[j][:, np.newaxis]) - truth) ** 2) for j in range(n_fits)]
     return grid_oracle_error
         
-def plot_oracle_error(grid_errors_control, grid_errors_treat, grid_lam_control, grid_lam_treat, plot_name, plots_dir="Plots/", plot_title=""):
-    plt.clf()
-    plt.xlim(np.min(np.concatenate((grid_lam_control, grid_lam_treat))), np.max(np.concatenate((grid_lam_control, grid_lam_treat))))
-    plt.plot(grid_lam_control, grid_errors_control, 'r-o', label="control")
-    plt.plot(grid_lam_treat, grid_errors_treat, 'b-o', label="treatment")
-    plt.title(plot_title)
-    plt.legend()
-    plt.savefig(plots_dir + plot_name)
-
 def plot_fitted_values(hypothesis, X, Y, 
     fitted_control, fitted_treat, plot_name,
     ind_control, ind_treat,
     Y_truth=None, X_truth=None, 
     plots_dir="Plots/", plot_title="", feature_name=None, response_name=None, labels_fontsize=16,
-    ind_control_truth=None, ind_treat_truth=None, include_truth=False, include_legend=False, 
+    ind_control_truth=None, ind_treat_truth=None, include_truth=False, include_fitted=True, include_legend=False, 
     save=True):
     if X.ndim == 1:
         p = 1
@@ -836,7 +832,8 @@ def plot_fitted_values(hypothesis, X, Y,
     X = np.reshape(X, (n, 1))
     Y = np.reshape(Y, (n, 1))
     if include_truth == True:
-        X_truth = np.shape(X_truth, (n, 1))
+        n_truth = X_truth.size
+        X_truth = np.reshape(X_truth, (n_truth, 1))
     if hypothesis == "alternative":
         X_control = X[ind_control]
         X_treat = X[ind_treat]
@@ -851,8 +848,9 @@ def plot_fitted_values(hypothesis, X, Y,
         plt.scatter(X_truth[ind_treat_truth], Y_truth[ind_treat_truth], color="blue", s=3)
     plt.scatter(X[ind_control, 0], Y[ind_control, 0], color="DarkOrange", s=3)
     plt.scatter(X[ind_treat, 0], Y[ind_treat, 0], color="blue", s=3)
-    plt.plot(X_control[ord_control], fitted_control[ord_control], label="treatment = 0", color="DarkOrange", linewidth=4)
-    plt.plot(X_treat[ord_treat], fitted_treat[ord_treat], label="treatment = 1", color="blue", linewidth=4)
+    if include_fitted == True:
+        plt.plot(X_control[ord_control], fitted_control[ord_control], label="treatment = 0", color="DarkOrange", linewidth=4)
+        plt.plot(X_treat[ord_treat], fitted_treat[ord_treat], label="treatment = 1", color="blue", linewidth=4)
     plt.title(plot_title)
     if response_name is not None:
         plt.ylabel(response_name, fontsize=labels_fontsize)

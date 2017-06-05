@@ -2,6 +2,9 @@
 AWS_Results/
 old/
 
+# files #
+AE_review_data_example.py
+
 
 # LateX stuff  (including .tex files since I'm using knitr for everything)#
 ######################
